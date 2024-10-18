@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Wish</title>
+  <style>
+    body {
+      background: radial-gradient(circle at center, #000428, #004e92);
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      color: #0ff;
+      text-shadow: 0 0 15px #0ff;
+    }
+
+    input {
+      padding: 15px;
+      width: 90%;
+      max-width: 300px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      outline: none;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    button {
+      padding: 15px 30px;
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: white;
+      background: #ff007c;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #ff00b7;
+    }
+
+    #greeting {
+      display: none;
+      margin-top: 30px;
+      font-size: 2em;
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ff, 0 0 60px #0ff;
+      animation: flicker 2s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .fireworks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      display: none;
+    }
+
+    .firework {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: #2eec04;
+      border-radius: 50%;
+      animation: explode 1.2s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(100);
+        opacity: 0;
+      }
+    }
+
+    /* Make it more responsive */
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 2.5em;
+      }
+
+      #greeting {
+        font-size: 2.5em;
+      }
+
+      input, button {
+        max-width: 350px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      h1 {
+        font-size: 3em;
+      }
+
+      #greeting {
+        font-size: 3em;
+      }
+
+      input {
+        width: 350px;
+      }
+
+      button {
+        padding: 15px 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Enter your name</h1>
+  <input type="text" id="nameInput" placeholder="Enter Name" />
+  <button onclick="wishBirthday()">Submit</button>
+
+  <div id="greeting"></div>
+
+  <div class="fireworks" id="fireworks"></div>
+
+  <script>
+    function wishBirthday() {
+      const name = document.getElementById("nameInput").value;
+      if (name) {
+        document.getElementById("greeting").innerHTML = `🚀 Happy Birthday, ${name}! 🚀`;
+        document.getElementById("greeting").style.display = 'block';
+
+        // Show fireworks
+        document.getElementById('fireworks').style.display = 'block';
+        clearFireworks(); // Clear any previous fireworks
+        createFireworks();
+
+        // Special futuristic greeting sound
+        new Audio('birthdaywish.m4a').play();
+
+        setTimeout(() => {
+          alert(`🎂🚀 Allah bless you always, ${name}! Enjoy your birthday! 🚀🎂`);
+        }, 3000);
+      } else {
+        alert("Please enter a name!");
+      }
+    }
+
+    function createFireworks() {
+      const fireworks = document.getElementById('fireworks');
+      for (let i = 0; i < 50; i++) {
+        const firework = document.createElement('div');
+        firework.classList.add('firework');
+        firework.style.left = Math.random() * window.innerWidth + 'px';
+        firework.style.top = Math.random() * window.innerHeight + 'px';
+        fireworks.appendChild(firework);
+
+        // Remove fireworks after they explode
+        setTimeout(() => {
+          firework.remove();
+        }, 1200);
+      }
+    }
+
+    function clearFireworks() {
+      const fireworksContainer = document.getElementById('fireworks');
+      while (fireworksContainer.firstChild) {
+        fireworksContainer.removeChild(fireworksContainer.firstChild);
+      }
+    }
+  </script>
+</body>
+</html>
